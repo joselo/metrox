@@ -12,6 +12,7 @@ defmodule AppWeb.SidebarComponent do
   attr :id, :string, default: "sidebar"
   attr :tabs, :list, required: true
   attr :active_tab, :atom, required: true
+  slot :inner_block
 
   def sidebar(assigns) do
     ~H"""
@@ -20,7 +21,7 @@ defmodule AppWeb.SidebarComponent do
         <.icon name="hero-bars-3" class="w-6 h-6" />
       </.link>
 
-      <.sidebar_logo />
+      {render_slot(@inner_block)}
     </header>
 
     <div
@@ -38,7 +39,9 @@ defmodule AppWeb.SidebarComponent do
 
       <div class="flex h-full min-h-0 flex-col">
         <aside id={@id} class="flex flex-1 flex-col overflow-y-auto">
-          <.sidebar_nav active_tab={@active_tab} tabs={@tabs} />
+          <.sidebar_nav active_tab={@active_tab} tabs={@tabs}>
+            {render_slot(@inner_block)}
+          </.sidebar_nav>
         </aside>
       </div>
     </div>
@@ -65,12 +68,13 @@ defmodule AppWeb.SidebarComponent do
 
   attr :tabs, :list, required: true
   attr :active_tab, :atom, required: true
+  slot :inner_block
 
   defp sidebar_nav(assigns) do
     ~H"""
     <div class="p-2">
       <div class="p-2">
-        <.sidebar_logo />
+        {render_slot(@inner_block)}
       </div>
 
       <.sidebar_menu_item :for={item <- @tabs} active_tab={@active_tab} item={item} />
@@ -114,7 +118,7 @@ defmodule AppWeb.SidebarComponent do
     ~H"""
     <div class={[
       "flex tabs-center rounded hover:bg-zinc-50 parent dark:hover:bg-zinc-700 my-1",
-      @active && "bg-zinc-100 dark:bg-zinc-700 dark:text-white"
+      @active && "bg-zinc-100 dark:bg-zinc-700 dark:text-white font-semibold"
     ]}>
       <.link class="w-full p-2 flex whitespace-nowrap space-x-2" {@toggle_options} {@rest}>
         <.icon :if={@item[:icon]} name={@item.icon} class="h-6 w-6" />
@@ -142,14 +146,6 @@ defmodule AppWeb.SidebarComponent do
     <ul id={"sidebar-parent-#{@tab}"} class={["ml-11", !@show_group && "hidden"]}>
       {render_slot(@inner_block)}
     </ul>
-    """
-  end
-
-  defp sidebar_logo(assigns) do
-    ~H"""
-    <.link navigate={~p"/"} class="flex text-lg font-semibold">
-      <.icon name="hero-cube-transparent" class="w-6 h-6 mr-2 text-primary-600" /> METROEXODUS
-    </.link>
     """
   end
 

@@ -1,5 +1,9 @@
 <div class="relative isolate flex min-h-svh w-full max-lg:flex-col">
-  <AppWeb.SidebarComponent.sidebar active_tab={@active_tab} tabs={@tabs} />
+  <AppWeb.SidebarComponent.sidebar active_tab={@active_tab} tabs={@tabs}>
+    <.link navigate={~p"/"} class="flex text-lg font-semibold">
+      <.icon name="hero-cube-transparent" class="w-6 h-6 mr-2 text-primary-600" /> METROEXODUS
+    </.link>
+  </AppWeb.SidebarComponent.sidebar>
 
   <main class="flex flex-1 flex-col pb-2 lg:min-w-0 lg:pl-64 lg:pr-2 lg:pt-2">
     <div class="grow p-6 lg:p-10">

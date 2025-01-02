@@ -17,7 +17,12 @@ defmodule AppWeb.TabsConfig do
 
   def tabs_config do
     [
-      %{label: gettext("Dashboard"), icon: "hero-home-solid", tab: :home, options: [navigate: ~p"/"]},
+      %{
+        label: gettext("Dashboard"),
+        icon: "hero-home-solid",
+        tab: :home,
+        options: [navigate: ~p"/"]
+      },
       %{
         label: gettext("Inventory"),
         icon: "hero-inbox-stack-solid",
